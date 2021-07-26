@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head">
+    <meta charset="UTF-8">
+</head>
+	<body>
+		<div class="container-fluid" id="container">
+			<div th:replace="navigation :: navigation"></div>
+
+			<div class="main">	
+			<div th:replace="header :: topbar"></div>	
+				<div>
+				 &nbsp; &nbsp; &nbsp;<a th:href="@{/dashbord}" style="text-decoration: none;">Tableau de bord &nbsp;/</a>
+				 <a th:href="@{/produit}" style="text-decoration: none;">Liste des  produits &nbsp;</a>
+				 <a th:href="@{/produitAdd}" style="text-decoration: none;">Ajouté un Produit</a>
+				</div>
+					
+					<div class="detailsProduit">
+						<div class="recentOrders">
+							 <form class="bg-light" action="#" th:action="@{/saveproduit}" th:object="${produit}" method="post" enctype="multipart/form-data">
+								<div class="contact-grids1 w3agile-6">
+									<div class="row">
+										<!-- Quantité -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Quantité</label>
+											<input type="text" class="form-control" placeholder="Quantité" name="qty" th:value="${produit.qty}" >
+											<span style="color: red;" th:errors="${produit.qty}"></span>
+										</div>
+										
+										<!-- Désignation -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Désignation</label>
+											<input type="text" class="form-control" placeholder="Désignation" name="design" th:value="${produit.design}">
+											<span style="color: red;" th:errors="${produit.design}"></span>
+										</div>
+										
+										<!-- Marque -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Marque</label>
+											<input type="text" class="form-control" placeholder="Marque" name="marque" th:value="${produit.marque}">
+											<span style="color: red;" th:errors="${produit.marque}"></span>
+										</div>
+										
+										<!-- Prix -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Prix</label>
+											<input type="text" class="form-control" placeholder="Prix" name="prix" th:value="${produit.prix}">
+											<span style="color: red;" th:errors="${produit.prix}"></span>
+										</div>
+										
+										<!-- Description -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Description</label>
+											<textarea class="form-control" placeholder="Description" rows="3" cols="45" name="desc" th:text="${produit.desc}"></textarea>
+											<span style="color: red;" th:errors="${produit.desc}"></span>
+										</div>
+										
+										<!-- Détails -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Détails</label>
+											<textarea class="form-control" placeholder="Détails" rows="3" cols="45" name="detail" th:text="${produit.detail}"></textarea>
+											<span style="color: red;" th:errors="${produit.detail}"></span>
+										</div>
+										
+										<!-- Image -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Image</label>
+											<input type="file" class="form-control" placeholder="Parcourir une image" id="imgView" name="myfile" accept="image/*" >
+											<span style="color: red;" th:errors="${produit.image}"></span>
+											<div id="imgApercuDiv"><img id="imgApercu" src="#" alt="" /></div>
+										</div>
+										
+										<!-- category -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label" for="category"> Catégorie </label>
+											<div class="col-md">
+												<select th:value="${produit.category}" id="category" name="category" class="form-control">
+													<option value="" selected="selected" disabled="disabled">Choisir une catégorie</option>
+													
+													<option value="Ordinateurs" th:selected="(${produit.category}=='Ordinateurs')">Ordinateurs</option>
+													
+													<option value="Imprimantes" th:selected="(${produit.category}=='Imprimantes')">Imprimantes</option>
+													
+													<option value="Memoires" th:selected="(${produit.category}=='Memoires')">Memoires</option>
+													
+													<option value="Cartes" th:selected="(${produit.category}=='Cartes')">Cartes</option>
+													
+												</select>
+											</div>
+											<span style="color: red;" th:errors="${produit.category}"></span>
+										</div>
+															
+										<!-- Quantité -->
+										<div class="col-md-6 col-sm-6 contact-form1 form-group">
+											<label class="col-form-label">Etat</label>
+											<input type="text" class="form-control" placeholder="Etat" name="active" th:value="${produit.active}" >
+											<span style="color: red;" th:errors="${produit.active}"></span>
+										</div>
+										
+									</div>
+									<br>
+									<div class="right-w3l col-md-6">
+										<input type="submit" id="submit" class="btn btn-primary form-control" value="Submit">
+									</div>
+								</div>
+							</form>
+						
+					</div>
+					
+					</div>
+			</div>
+		</div>	
+	<script>
+        function toggleMenu(){
+            let toggle = document.querySelector('.toggle');
+            let navigation = document.querySelector('.navigation');
+            let main = document.querySelector('.main');
+            toggle.classList.toggle('active')
+            navigation.classList.toggle('active')
+            main.classList.toggle('active')
+        }
+        
+        imgView.onchange = evt => {
+        	  const [file] = imgView.files
+        	  if (file) {
+        		  imgApercu.src = URL.createObjectURL(file)
+        		  let img = document.querySelector('#imgApercuDiv');
+        		  img.classList.toggle('active')
+        	  }
+        	}
+    </script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/3e9d5b9e3a.js"></script>
+</body>
+</html>

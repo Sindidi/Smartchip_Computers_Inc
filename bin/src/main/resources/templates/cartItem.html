@@ -1,0 +1,132 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="layout :: head"></head>
+  	<head>
+	    <!-- Required meta tags -->
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	    <!-- CSS Personal -->
+	    <link rel="stylesheet" th:href="@{/css/cartItem.css}">
+    
+  	</head>
+  <body>
+	<div th:replace="layout :: header"></div>
+	<div class="container">
+	<div class="wrapper wrapper-content animated fadeInRight">
+	    <div class="row">
+	        <div class="col-md-9">
+	            <div class="ibox">
+	                <div class="ibox-title">
+	                    <span class="pull-right">(<strong th:text="${#lists.size(cartItemList)}"></strong>) items</span>
+	                    <h5>Items in your cart</h5>
+	                </div>
+	                <div class="ibox-content">
+	                    <div class="table-responsive">
+	                        <table class="table shoping-cart-table">
+	                            <tbody th:each="cartItem : ${cartItemList}">
+	                            <tr>
+	                                <td width="90">
+	                                    <div class="cart-product-imitation">
+	                                    <img alt="" th:src="${'/images/'+cartItem.produit.name}" style="width: 100%; height: 100%">
+	                                    </div>
+	                                </td>
+	                                <td class="desc">
+	                                    <h3>
+	                                    <a href="#" class="text-navy" th:text="${cartItem.produit.design}">
+	                                       
+	                                    </a>
+	                                    </h3>
+	                                    <p class="small" th:text="${cartItem.produit.desc}"></p>
+	                                    <dl class="small m-b-none">
+	                                        <dt>Déscription</dt>
+	                                        <dd th:text="${cartItem.produit.detail}"></dd>
+	                                    </dl>
+	
+	                                    <div class="m-t-sm">
+	                                        <a th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
+	                                    </div>
+	                                </td>
+	
+	                                <td th:text="${#numbers.formatDecimal(cartItem.produit.prix, 0 , 'COMMA', 2, 'POINT')}+' F CFA'"></td>
+	                                <td width="65">
+	                                    <select class="form-control" name="qty">
+	                                    	<option th:text="${cartItem.qty}"></option>
+	    									<option th:each="qty : ${qtyList}" th:value="${qty}" th:text="${qty}"></option>
+	    								</select>
+	                                </td>
+	                               
+	                                <td>
+	                                    <h4 th:text="${#numbers.formatDecimal(cartItem.subtotal, 0 , 'COMMA', 2, 'POINT')}+' F CFA'"></h4>
+	                                </td>
+	                            </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	
+	                </div>
+	                
+	                
+	                
+	                <div class="ibox-content">
+	                    <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+	                    <a th:href="@{/index}" class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</a>
+	
+	                </div>
+	            </div>
+	
+	        </div>
+	        <div class="col-md-3">
+	            <div class="ibox">
+	                <div class="ibox-title">
+	                    <h5>Cart Summary</h5>
+	                </div>
+	                <div class="ibox-content">
+	                    <span>
+	                        Total
+	                    </span>
+	                    <h2 class="font-bold" th:text="${#numbers.formatDecimal(shoppingCart.grandTotal, 0 , 'COMMA', 2, 'POINT')}+' F CFA'">
+	                       
+	                    </h2>
+	
+	                    <hr>
+	                    <span class="text-muted small">
+	                        *For United States, France and Germany applicable sales tax will be applied
+	                    </span>
+	                    <div class="m-t-sm">
+	                        <div class="btn-group">
+	                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
+	                        <a href="#" class="btn btn-white btn-sm"> Cancel</a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	
+	            <div class="ibox">
+	                <div class="ibox-title">
+	                    <h5>Support</h5>
+	                </div>
+	                <div class="ibox-content text-center">
+	                    <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
+	                    <span class="small">
+	                        Please contact with us if you have any questions. We are avalible 24h.
+	                    </span>
+	                </div>
+	            </div>
+	
+	            
+	        </div>
+	    </div>
+	</div>
+	</div>
+	
+	
+	
+	
+	<div th:replace="layout :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

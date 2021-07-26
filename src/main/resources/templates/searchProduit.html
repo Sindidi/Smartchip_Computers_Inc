@@ -1,0 +1,106 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: head">
+  </head>
+  <head>
+    	<meta charset="UTF-8">
+      	<link rel="stylesheet" th:href="@{css/searchProuit.css}">
+  </head>
+  <body>
+   <div th:replace="layout :: header"></div>
+    	<div class="container">
+    	
+    	<div class="row" style="margin-top: 60px;">
+				<div class="col-md-2 fixed-midlle">
+					<h3>
+						<label for="category">CATÉGORIES</label>
+					</h3>
+					<div class="list-group" id="category">
+						
+						<a th:href="@{/searchByAllCategory(category=Tous)}"	th:classappend="${activeTous}? 'active'" class="list-group-item">Tous</a>
+					
+						<a th:href="@{/searchByCategory(category='Ordinateurs')}" th:classappend="${activeOrdinateurs}? 'active'" class="list-group-item">Ordinateurs</a>
+						
+						<a th:href="@{/searchByCategory(category='Imprimantes')}" th:classappend="${activeImprimantes}? 'active'" class="list-group-item">Imprimantes</a>
+						
+						<a th:href="@{/searchByCategory(category='Memoires')}" th:classappend="${activeMemoires}? 'active'" class="list-group-item">Memoires</a>
+						
+						<a th:href="@{/searchByCategory(category='Cartes')}" th:classappend="${activeCartes}? 'active'" class="list-group-item">Cartes</a>
+					</div>
+				</div>
+				<div class="col-md">
+					<div th:if="${empty}">
+						<h5 style="font-style: italic;">Oups, aucun résultat n'est trouvé. Essayez autre chose ou réessayez plus tard.</h5>
+					</div>
+					<table style="border: none;" id="produitList">
+						<tbody>
+							<tr class="produit-item row" style="height: 5%">
+								<td data-th-each="p : ${produitList}" class="col-md-6">
+									<div th:if="${p != null}">
+										<div class="row">
+											<div class="col-md">
+											  <a th:href="@{/detailProduct?id=}+${p.id}"><img style="width: 85%;height: 85%" class="img-responsive shelf-produit" th:src="${'/images/'+p.name}" /></a> 
+											</div>
+											<div class="col-md-8">
+												<h3 class="text-primary" th:text="${#numbers.formatDecimal(p.prix, 0 , 'COMMA', 2, 'POINT')}+' F CFA'" ></h3>
+												<span style="font-size: 250%;" th:text="${p.design}">  </span> <span class="bg-info text-white" th:text="' Catégorie : '+${p.category}"></span>
+												<p th:utext="${#strings.abbreviate(p.desc,50)}"></p>
+												<a th:href="@{/detailProduct?id=}+${p.id}" class="btn btn-primary">Voir détails</a>												
+											</div>
+										</div>
+									</div>
+									<hr/>
+								</td>
+							</tr>
+							<tr class="produit-item row" style="height: 5%">
+								<td data-th-each="p : ${produitAll}" class="col-md-6">
+									<div th:if="${p != null}">
+										<div class="row">
+											<div class="col-md">
+											  <a th:href="@{/detailProduct?id=}+${p.id}"><img style="width: 85%;height: 85%" class="img-responsive shelf-produit" th:src="${'/images/'+p.name}" /></a> 
+											</div>
+											<div class="col-md-8">
+												<h3 class="text-primary" th:text="${#numbers.formatDecimal(p.prix, 0 , 'COMMA', 2, 'POINT')}+' F CFA'" ></h3>
+												<span style="font-size: 250%;" th:text="${p.design}">  </span> <span class="bg-info text-white" th:text="' Catégorie : '+${p.category}"></span>
+												<p th:utext="${#strings.abbreviate(p.desc,50)}"></p>
+												<a th:href="@{/detailProduct?id=}+${p.id}" class="btn btn-primary">Voir détails</a>												
+											</div>
+										</div>
+									</div>
+									<hr/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				
+    	</div>
+		<script>
+			$(document).ready(
+					function() {
+						$('#produitList').DataTable(
+								{
+									"lengthMenu" : [ [ 5, 10, 15, 20, -1 ],
+											[ 5, 10, 15, 20, "All" ] ],
+									"ordering" : false,
+									stateSave : true
+								});
+
+						$("#produitList").on('page.dt', function() {
+							$('html, body').animate({
+								scrollTop : $('#produitList').offset().top
+							}, 200);
+						});
+					});
+		</script>
+											
+	</div>
+	<div th:replace="layout :: footer"></div>
+	<!-- ----------------------------------------------------------------------------------------------- -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

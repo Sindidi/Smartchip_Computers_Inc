@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: head">
+  </head>
+  <head>
+  		<meta charset="UTF-8">
+      	<link rel="stylesheet" th:href="@{css/style_registre.css}">
+  </head>
+  <body>
+	<div th:replace="layout :: header"></div>
+ 
+					<!-- Main Content -->
+					<div class="container-fluid">
+						<div class="row main-content bg-success text-center">
+							<div class="col-md-4 text-center company__info">
+								<span class="company__logo"> <img alt="" src="/img/shopping-cart-lg.png" style="width: 100%; margin-left: -5%"> </span>
+								<h2><a href="/login"></a> </h2>
+							</div>
+							<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+								<div class="container">
+									<div class="row" style="margin-left: 25%">
+										<h2>Créez votre compte</h2>
+									</div>
+									<!-- success message -->
+		            				<span th:if="${param.success}" 
+		            				class="alert alert-success text-center">Votre inscrition à réussi &  Cliquez <a href="/login">ICI</a> pour connecter </span>
+									<div class="row">
+										<form method="POST" class="form-group " th:object="${userForm}" th:action="@{/registration}">
+											<div class="row">
+												<div class="col-md ">
+												<input type="text" th:field="*{fisrtname}" name="fisrtname" id="fisrtname" class="form__input text-center" placeholder="Prénom">
+												<span class="has-error text-danger" th:errors="*{fisrtname}"></span>
+												</div>
+												<div class="col-md">
+												<input type="text" th:field="*{lastname}" name="lastname" id="lastname" class="form__input text-center" placeholder="Nom">
+												<span class="has-error text-danger" th:errors="*{lastname}"></span>
+												</div>
+												<div class="col-md">
+												<input type="text" th:field="*{address}" name="address" id="address" class="form__input text-center" placeholder="Adresse">	
+												<span class="has-error text-danger" th:errors="*{address}"></span>
+												</div >
+												<div class="col-md">
+												<input type="text" th:field="*{phone}" name="phone" id="phone" class="form__input text-center" placeholder="Téléphone">	
+												<span class="has-error text-danger" th:errors="*{phone}"></span>
+												</div>												
+											</div>
+											<div class="row">
+												<div class="col-md">
+												<input type="text" th:field="*{username}" class="form__input text-center" placeholder="Username">
+		                						<span class="has-error text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+											</div>
+											</div>
+											<div class="row">
+												<div class="col-md">
+												<input type="password" th:field="*{password}" class="form__input text-center" placeholder="Password">
+		                						<span class="has-error text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+												</div>
+												<div class="col-md">
+												<!-- <span class="fa fa-lock"></span> -->
+		                						<input type="password" th:field="*{passwordConfirm}" class="form__input text-center" placeholder="Confirm your password">
+		                						<span class="has-error text-danger" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
+												</div>												
+											</div>
+											
+											<div class="row" style="margin-left: 25%">
+												<button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+											</div>
+										</form>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+	</div>
+ 
+	<div th:replace="layout :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
